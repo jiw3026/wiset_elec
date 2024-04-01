@@ -51,20 +51,19 @@ print(sorted_max_diffs_df)
 # 간단한 예시로, 최대 차이값의 상위 10%를 고장으로 가정
 #threshold = sorted_max_diffs_df['Max Diff'].quantile(0.9)
 #df['Fault'] = (sorted_max_diffs_df['Max Diff'] >= threshold).astype(int)
-
-#df['Fault'] = (sorted_max_diffs_df['Max Diff'] > 0.5).astype(int) # −0.05×V N−1
+# −0.05×V N−1
+#df['Fault'] = (sorted_max_diffs_df['Max Diff'] > 0.5).astype(int) 
 
 # 특성 및 타겟 변수 분리
 X = sorted_max_diffs_df[['Max Diff']]  # 여기서는 'max_diff'만 특성으로 사용
 print(X)
-#X.df['Fault'] = (X.values > 0.5).astype(int)
-#y = df['Fault']
 X['Fault'] = (X['Max Diff'] > 0.5).astype(int)
 y = X['Fault']
 
 # 데이터 분할
 #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 X_train, X_test, y_train, y_test = train_test_split(X[['Max Diff']], y, test_size=0.3, random_state=42)
+
 # 모델 훈련 및 예측
 model = GradientBoostingClassifier(random_state=42)
 model.fit(X_train, y_train)
